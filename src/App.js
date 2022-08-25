@@ -2,16 +2,14 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import Navbar from "./components/Navbar"
+import ItemListContainer from './components/ItemListContainer';
 function App() {
-
-  
-
+  const titulo = "Inicio"
   return (
     <div classname="App">
       <Navbar/>
-      <h1>Holas mundo</h1>
-      <br />
-      <a href="http://google.com">ir a google</a>
+      <ItemListContainer  greeting="welcome" titulo={titulo} />
+
     </div>
   );
 }
