@@ -3,14 +3,16 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import Navbar from "./components/Navbar"
 import ItemListContainer from './components/ItemListContainer';
+import ItemCount from './components/ItemCount'
 function App() {
   const titulo = "Inicio"
   return (
-    <div classname="App">
+    <div className="App">
       <Navbar/>
       <ItemListContainer  greeting="welcome" titulo={titulo} />
+      <ItemCount/>
 
-    </div>
+    </div>  
   );
 }
 
