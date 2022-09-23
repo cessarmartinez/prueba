@@ -1,14 +1,13 @@
+import { SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
 import Item from './Item'
 
-const ItemList = ({listProducts}) =>{
-    return(
-        <>
-        {listProducts.map(product =><Item 
-        key={product.name}
-        producto={product}/>)}
-        </>
-    )
-}
+export default function ItemList({ items }) {
 
-export default ItemList
+  return (
+    <SimpleGrid columns={3} spacing={10}>
+      
+      {items.map((item) => (<Item key={item.id} item={item} />))}
+      </SimpleGrid>
+  )
+}

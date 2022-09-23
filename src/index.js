@@ -3,17 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA5ERCfdlPVQPZ7wNZSCroARKNIiIjdaTU",
+  authDomain: "e-commerce-react-e3b9d.firebaseapp.com",
+  projectId: "e-commerce-react-e3b9d",
+  storageBucket: "e-commerce-react-e3b9d.appspot.com",
+  messagingSenderId: "752474691400",
+  appId: "1:752474691400:web:93236dbf36bda7aa57457d",
+  measurementId: "G-D514CEYMKE"
+};
+
+// Initialize Firebase
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <>
-  {/*<React.StrictMode>*/}
+  // comentado mientras se aprende REACT
+  // <React.StrictMode>
     <App />
-  {/*</React.StrictMode>*/} 
-  </>
+  // </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

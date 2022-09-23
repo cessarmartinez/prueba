@@ -1,19 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.css'
-import Navbar from "./components/Navbar"
-import ItemListContainer from './components/ItemListContainer';
-import ItemCount from './components/ItemCount'
-function App() {
-  const titulo = "Inicio"
-  return (
-    <div className="App">
-      <Navbar/>
-      <ItemListContainer  greeting="welcome" titulo={titulo} />
-      <ItemCount/>
+import NavBar from './components/NavBar';
+import Cart from './components/Cart';
+import Footer from './components/Footer';
 
-    </div>  
+import { ChakraProvider } from '@chakra-ui/react';
+import ItemListContainer from './components/ItemListContainer';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ItemDetailContainer from './components/ItemDetailContainer';
+import { useState } from 'react';
+import { CartProvider } from './context/CartContext'
+
+export default function App() {
+
+  const [color, setColor] = useState('dark');
+
+  return (
+    <ChakraProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route exact path='/' element={<ItemListContainer />} />
+            <Route exact path='/categoria/:category' element={<ItemListContainer />} />
+            <Route exact path='/producto/:id' element={<ItemDetailContainer />} />
+            <Route exact path='/cart' element={<Cart />} />
+            <Route exact path='/order' />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </CartProvider>
+    </ChakraProvider>
   );
 }
-
-export default App;

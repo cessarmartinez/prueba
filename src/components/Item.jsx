@@ -1,28 +1,33 @@
-import React from "react"
-import productos from "./productos"
+import { Button, Container, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import React from 'react'
+import { useNavigate } from 'react-router-dom';
+import { BsArrowRightShort } from 'react-icons/bs'
 
-const Item = ({producto}) => {
-    return (
-        <>
-        <div className="col mb-5">
-            <div className="card h-100">
-                <img className="card-img-top" src={producto.imagen} alt="${product.descripcion}" />
-                <div className="card-body p-4">
-                    <div className="text-center">
-                        <h5 className="fw-bolder">{producto.name}</h5>
-                            {producto.precio}
-                        </div>
-                    </div>
-                    <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div className="text-center">
-                            <button className="btn btn-outline-dark mt-auto " id="boton">Agregar
-                            </button>
-                        </div>
-                    </div>
-            </div>
-        </div>
-        </>
-    )
+export default function Item({ item }) {
+
+  const {imgUrl, name, price, id} = item
+
+  const navegar = useNavigate()
+
+  return (
+    <Container p={"1rem"} my={"1rem"} _hover={{
+      background: "#f3f3f3",
+    }} >
+      <Flex direction='column' gap='10px'>
+      <Image
+        height='300px'
+        objectFit='cover'
+        src={imgUrl}
+      />
+      <Heading as='h4' size='sm'>{name}</Heading>
+      
+      <Text fontSize='lg'>${price}</Text>
+      <Button alignSelf="center" rightIcon={<BsArrowRightShort size="1.4rem"/>} colorScheme='#010224' variant='outline' _hover={{
+      background: "#010224",
+      color: "#f4f4f6"
+    }} onClick={() => navegar(`/producto/${id}`)}>
+      Ver producto</Button>
+      </Flex>
+    </Container>
+  )
 }
-
-export default Item
