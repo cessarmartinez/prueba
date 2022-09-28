@@ -14,7 +14,7 @@ export default function ItemListContainer() {
   //firebase
   useEffect(()=>{
     setLoading(true)
-    const productos = category ?query(collection(db, "productos"), where("category", "==", category) ) :collection(db, "products")
+    const productos = category ?query(collection(db, "products"), where("category", "==", category) ) :collection(db, "products")
     getDocs(productos)
     .then((result)=>{
       const lista = result.docs.map((product)=>{
