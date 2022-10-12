@@ -3,4 +3,4 @@
 Creación de un e-commerce utilizando React JS y Chakra UI
 
 Navegación
-https://i.postimg.cc/9QWscF9H/E-Commerce.gif
+![Alt Text](https://i.postimg.cc/9QWscF9H/E-Commerce.gif)
