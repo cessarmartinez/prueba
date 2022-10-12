@@ -1,5 +1,5 @@
 # Proyecto Final para el curso React JS - CODERHOUSE
-# [AliArg - App con React.js](https://matibian.github.io/mat-Ecommerce)
+# [E-Commerce](https://cessarmartinez.github.io/DesafioReactJS/)
 
 Creación de un e-commerce utilizando React JS y Chakra UI
 
