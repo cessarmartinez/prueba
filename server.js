@@ -1,136 +1,65 @@
-/* CONFIGURACION SERVIDOR */
 const express = require("express");
+const { Router } = express;
 const app = express();
-const PORT = 8080;
-app.listen(PORT,()=>console.log(`Servidor ON. Puerto ${PORT}`))
+const routerProductos = Router();
+const port = process.env.PORT || 8080;
+const Contenedor = require("./contenedor");
+const contenedor = new Contenedor();
 
-app.use(express.urlencoded({extended:true}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static("public"));
+app.listen(port, () => {
+  console.log(`Listening on port http://localhost:${port}`);
+});
 
-/* CONFIGURACIÓN ROUTER */
-const productsRouter = express.Router();
-app.use("/api/productos",productsRouter)
+app.use("/api/productos", routerProductos);
+app.use("/public", express.static(__dirname + "/public"));
 
-/* FUNCIONALIDAD SERVIDOR */
-class Contenedor{
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
-    static id=0;
-    static productsList = [];
-    constructor(){
-    }
+app.post("/formulario", (req, res) => {
+  const { body } = req;
+  contenedor.save(body);
+  res.json("Formulario recibido correctamente");
+});
 
-    save(product){
-        try{
-            Contenedor.id++
-            Contenedor.productsList.push({id:Contenedor.id,...product})
-        }catch{
-            return Error("Error en Contenedor.save(object)")
-        }
-    }
+routerProductos.get("/", async (req, res) => {
+  const todos = await contenedor.getAll();
+  res.json(todos);
+});
 
-    update(product,id){
-        try{
-            Contenedor.productsList.push({id:id,...product})
-        }catch{
-            return Error("Error en Contenedor.update(product,id)")
-        }
-    }
+routerProductos.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const productoEncontrado = await contenedor.getById(id);
+  if (productoEncontrado) {
+    res.json(productoEncontrado);
+  } else {
+    res.json({ error: "no se encuentra el producto" });
+  }
+});
 
-    sort(){
-        Contenedor.productsList.sort((a,b)=>{
-            if(a.id>b.id){
-                return 1
-            }
-            if(a.id<b.id){
-                return -1
-            }
-        })
-    }
+routerProductos.post("/", async (req, res) => {
+  const { body } = req;
+  await contenedor.save(body);
+  res.json({ success: "producto agregado correctamente" });
+});
 
-    getById(id){
-        try{
-            const productObj = Contenedor.productsList.filter(elm=>elm.id==id)
-            return productObj
-        }catch{
-            return Error("Error en Contenedor.getById(id)")
-        }
-    }
+routerProductos.put("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { title, price, thumbnail } = req.body;
+    await contenedor.updateById(id, title, price, thumbnail);
+    res.json("producto actualizado");
+  } catch (error) {
+    res.json({ error: "producto no encontrado" });
+  }
+});
 
-    getAll(){
-        try{
-            return Contenedor.productsList;
-        }catch{
-            return Error("Error en Contenedor.getAll()")
-        }
-    }
-
-    deleteById(id){
-        try{
-            const productsArrayDeletedId = Contenedor.productsList.filter((elm)=>elm.id != id)
-            Contenedor.productsList = productsArrayDeletedId;
-        }catch{
-            return Error("Error en Contenedor.deleteById(id)")
-        }
-    }
-
-    deleteAll(){
-        Contenedor.productsList = [];
-    }
-}
-
-let products = new Contenedor;
-
-/* RUTAS SERVIDOR */
-productsRouter.get("/",(req,res)=>{
-    res.send(products.getAll())
-})
-productsRouter.get("/:id",(req,res)=>{
-    let id = parseInt(req.params.id);
-    product = products.getById(id);
-    product == false ? res.send({"error": "No hay producto"}) : res.send(product);
-})
-productsRouter.post("/",(req,res)=>{
-    const productObject = req.body;
-    if (productObject.name && productObject.price && productObject.thumbnail){
-        products.save(productObject);
-        res.send({"exito":"Producto agregado"})
-    }else{
-        res.send({"error":"Faltan campos o estan erroneos (name, price, thumbnail)"})
-    }
-})
-productsRouter.put("/:id", async (req,res)=>{
-    const id = parseInt(req.params.id);
-    const productObject = req.body;
-
-    if (products.getById(id) == false){
-        res.send({"error": "No hay producto para actualizar"})
-    }else{
-        if (productObject.name && productObject.price && productObject.thumbnail){
-
-            await products.deleteById(id);
-            products.update(productObject,id);
-            products.sort()
-
-            res.send({"exito":`Producto con id ${id} actualizado`});
-
-        }else{
-            res.send({"error":"Faltan campos o estan erroneos (name, price, thumbnail)"})
-        }
-    } 
-})
-productsRouter.delete("/:id",(req,res)=>{
-    const id = parseInt(req.params.id);
-    const productObj = products.getById(id)
-    if (productObj == false){
-        res.send({"error":`Producto con id ${id} no existe`})
-    }else{
-        products.deleteById(id);
-        res.send({"exito":`Producto con id ${id} eliminado`});
-    }
-})
-
-
-/* RUTA DE CONTROL */
-app.get("*",(req,res)=>res.send({"error":"No existe la ruta"}))
+routerProductos.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  await contenedor.deleteById(id);
+  res.json("producto borrado");
+});
