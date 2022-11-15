@@ -1,0 +1,46 @@
+.navbar {
+    background-color: #000000; }
+    .navbar #logo {
+      height: 80px;
+      width: 80px; }
+    .navbar #navbarNav {
+      transition: all 0.5s; }
+      .navbar #navbarNav .nav-link {
+        font-size: 20px; }
+      .navbar #navbarNav .nav-item:hover {
+        font-weight: bold; }
+
+footer {
+    width: 100%;
+    background-color: #000000;
+    display: flex;
+    justify-content: end; }
+    footer .anchoFooter {
+      margin-top: 10px;
+      margin-bottom: 10px; }
+      footer .anchoFooter .redes {
+        display: inline-block; }
+        footer .anchoFooter .redes .bi-facebook {
+          font-size: 30px;
+          text-align: center;
+          margin-left: 5px;
+          margin-right: 5px;
+          color: #fff; }
+          footer .anchoFooter .redes .bi-facebook:hover {
+            color: #3b5998; }
+        footer .anchoFooter .redes .bi-twitter {
+          font-size: 30px;
+          text-align: center;
+          margin-left: 5px;
+          margin-right: 5px;
+          color: #fff; }
+          footer .anchoFooter .redes .bi-twitter:hover {
+            color: #38a5ff; }
+        footer .anchoFooter .redes .bi-instagram {
+          font-size: 30px;
+          text-align: center;
+          margin-left: 5px;
+          margin-right: 5px;
+          color: #fff; }
+          footer .anchoFooter .redes .bi-instagram:hover {
+            color: #ec09b3; }
