@@ -1,1 +1,0 @@
-[{"id":1,"code":"adidas","name":"OZELIA W","precio":30999,"imagen":"https://raw.githubusercontent.com/cessarmartinez/DesafioJS/main/assets/img/ozelia.png","descripcion":"zapatilla ozelia w"}]
